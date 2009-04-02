@@ -74,10 +74,10 @@ Return the sorted list.
 Returns the number of elements in a list.
 
 ==void sl_free(void *root, void (*func)(void*))==
-A macro that just calls sl__free(). This is necessary because sl_free() is a defined function on OS-X.
+A macro that just calls `sl__free()`. This is necessary because `sl_free()` is a defined function on Mac OS X.
 
 ==void sl__free(void *root, void (*func)(void*))==
-Free a list of nodes. Takes an optional argument, @p func, used to free the node if it is defined.
+Free a list of nodes. Takes an optional argument, `func`, used to free the node if it is defined.
 
 = AUTHOR =
 
@@ -85,7 +85,7 @@ Stig Brautaset <stig@brautaset.org>
 
 = CREDITS =
 
-Thanks to Thomas Stegen of comp.lang.c for suggesting the void* trick employed in `sl_pop()` and `sl_shift()`.
+Thanks to Thomas Stegen of comp.lang.c for suggesting the `void*` trick employed in `sl_pop()` and `sl_shift()`.
 
 Thanks to CB Falconer of comp.programming for help on the sorting code.
 
