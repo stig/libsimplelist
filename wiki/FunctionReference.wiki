@@ -59,7 +59,7 @@ If func returns a negative value the same happens as when a positive value is re
 
 You can return the first 5 elements that matches a certain criteria by maintaining a counter in data and return 1 until the fifth node is found, then return -1.
 
-Note: this function takes a pointer to a pointer to a node as its argument. C does not allow void ** to be used as a generic pointer to pointer type. However, since void * is a generic pointer, it can also point to a pointer to pointer.
+Note: this function takes a pointer to a pointer to a node as its argument. C does not allow `void **` to be used as a generic pointer to pointer type. However, since `void *` is a generic pointer, it can also point to a pointer to pointer.
 
 ==void *sl_split(void *root)==
 Split a list roughly on the middle; return a pointer to the second half.
