@@ -1,0 +1,98 @@
+#summary A Simple Linked-List implementation in C
+#labels Featured
+
+<wiki:toc depth="1"/>
+
+= DESCRIPTION =
+
+`sl' provides a generic implementation of singly-linked lists and stacks.
+
+`sl' does not do extra allocations behind the scenes for placeholder nodes, yet users of the library can define their node structure almost any way they want. The one important thing is that the ->next member is the first member of the structure.
+
+Internally the library uses a structure defined as:
+
+{{{
+struct sl_node {
+    struct sl_node *next;
+};
+}}}
+
+But you are allowed to use any structure you want, as long as a pointer to the next structure in the list is the first member of the structure. (It doesn't have to be called next, by the way). As an example, you could build a generic container-based list structure like so:
+
+{{{
+struct cons {
+    struct cons *cdr;
+    void *car;
+};
+}}}
+
+= FUNCTIONS =
+
+== void *sl_push(void *root, void *p) ==
+Push p onto the list root. Return the new list.
+
+== void *sl_pop(void *root) ==
+Pop a node from a list. Return the pop'ed item, or NULL if the list is empty.
+
+Note: this function takes a pointer to a pointer to a node as its argument. C does not allow void ** to be used as a generic pointer to pointer type. However, since void * is a generic pointer, it can also point to a pointer to pointer.
+
+== void *sl_unshift(void *root, void *p) ==
+Shift a node onto the `far end' of a list. This function can be used to append a list to another. The new list is returned.
+
+==void *sl_shift(void *) ==
+Shift a node from the `far end' of a list. Returns the item shifted off the list, or NULL if the list is empty.
+
+Note: this function takes a pointer to a pointer to a node as its argument. C does not allow void ** to be used as a generic pointer to pointer type. However, since void * is a generic pointer, it can also point to a pointer to pointer.
+
+== void *sl_reverse(void *root) ==
+Returns the reversed list.
+
+== void *sl_map(void *root, int (*func)(void *, void *), void *data) ==
+Map a function, func, to every element in a list. The data is handed to func along with each node. This function can be used for a sequential search of a list of nodes.
+
+This function returns NULL on normal operation. If func returns non-zero, a pointer to the current node will be returned.
+
+==void *sl_filter(void *root, int (*func)(void *, void *), void *data)==
+func is called once for each node in the list, having the node itself passed as the first argument; data is passed as the second argument. If func returns a positive value the current node will be extracted from the passed-in list and stored in a temporary list. When we get to the end of the passed-in list, the temporary list is returned.
+
+If func returns a negative value the same happens as when a positive value is returened but in addition any further traversal of the passed-in array is terminated and the current temporary list is returned immediately.
+
+You can return the first 5 elements that matches a certain criteria by maintaining a counter in data and return 1 until the fifth node is found, then return -1.
+
+Note: this function takes a pointer to a pointer to a node as its argument. C does not allow void ** to be used as a generic pointer to pointer type. However, since void * is a generic pointer, it can also point to a pointer to pointer.
+
+==void *sl_split(void *root)==
+Split a list roughly on the middle; return a pointer to the second half.
+
+==void *sl_merge(void *p1, void *p2, int (*cmp)(void *, void *))==
+Merge two sorted lists and keep the list sorted. This function is the heart of the mergesort routine. Thanks to CB Falconer for this code.
+
+==void *sl_mergesort(void *root, int (*cmp)(void *, void *))==
+Return the sorted list.
+
+==int sl_count(void *p)==
+Returns the number of elements in a list.
+
+==void sl_free(void *root, void (*func)(void*))==
+A macro that just calls sl__free(). This is necessary because sl_free() is a defined function on OS-X.
+
+==void sl__free(void *root, void (*func)(void*))==
+Free a list of nodes. Takes an optional argument, @p func, used to free the node if it is defined.
+
+= AUTHOR =
+
+Stig Brautaset <stig@brautaset.org>
+
+= CREDITS =
+
+Thanks to Thomas Stegen of comp.lang.c for suggesting the void* trick employed in `sl_pop()` and `sl_shift()`.
+
+Thanks to CB Falconer of comp.programming for help on the sorting code.
+
+Richard Spindler suggested what became the sl_filter() function.
+
+= COPYRIGHT =
+
+Copyright (C) 2003,2004,2005 Stig Brautaset
+
+This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
