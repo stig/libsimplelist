@@ -49,10 +49,23 @@ structure.
 
 /*
 
+=pod
+
 Internally the library uses a structure defined as:
 
   struct sl_node {
     struct sl_node *next;
+  };
+
+But you are allowed to use any structure you want, as long as a
+pointer to the next structure in the list is the first member of the
+structure. (It doesn't have to be called C<next>, by the way). As an
+example, you could build a generic container-based list structure like
+so:
+
+  struct cons {
+    struct cons *cdr;
+    void *car;
   };
 
 =cut
