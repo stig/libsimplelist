@@ -240,15 +240,20 @@ void *sl_map(void *root, int (*func)(void *, void *), void *data)
 
 =item void *sl_filter(void *root, int (*func)(void *, void *), void *data)
 
-If C<func> returns negative when it finds a match, the element is
-removed from the list and returned immediatly. However, if C<func>
-returns positive, it returns a list of *all* values that match, and
-these elements are removed from the original list.
+C<func> is called once for each node in the list, having the node itself
+passed as the first argument; C<data> is passed as the second argument.
+If C<func> returns a positive value the current node will be extracted
+from the passed-in list and stored in a temporary list. When we get to
+the end of the passed-in list, the temporary list is returned.
 
-To return only the first 5 elements maintain a counter in C<data> and
-thus return only the first 5 elements matching your criteria by
-having C<func> examine C<data> and return negative instead of
-positive on the fifth match.
+If C<func> returns a I<negative> value the same happens as when a
+positive value is returened but in addition any further traversal of the
+passed-in array is terminated and the current temporary list is returned
+immediately.
+
+You can return the first 5 elements that matches a certain criteria by
+maintaining a counter in C<data> and return 1 until the fifth node is
+found, then return -1.
 
 B<Note:> this function takes a pointer to a pointer to a node as
 its argument. C does not allow C<void **> to be used as a
