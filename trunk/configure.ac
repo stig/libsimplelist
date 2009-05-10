@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.59)
-AC_INIT(sl, 0.3.3, stig@brautaset.org)
+AC_INIT(sl, 0.3.4, stig@brautaset.org)
 
 AC_CONFIG_AUX_DIR([config])
 AC_CONFIG_MACRO_DIR([config])
