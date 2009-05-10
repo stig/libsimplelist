@@ -1,0 +1,23 @@
+sl (0.3.2) 2005-08-20
+
+  * allow linking from C++
+  * remove old arch-tag lines
+  * minor source reorg. 
+  * no need to recompile tests if only library has changed
+  * assume STDC headers exists
+  * tab -> spaces translation
+  * update bootstrap file
+
+sl (0.3.1) 2004-04-09
+
+  * added Debian package generation
+  * up version + add hand-written changelog
+  * use pod instead of doxygen for docs + minor tree-reorg 
+  * work around sl_free() name clash on OS-X.  The API stays the
+    same, but the ABI has changed, so a recompile is necessary.
+
+sl (0.3.0) 2004-04-09
+
+  * initial import into Darcs. This is a continuation of 
+    stig@brautaset.org--2004/sl--devo--0.3--patch-64
+
