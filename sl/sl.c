@@ -1,26 +1,4 @@
 /*
-SL - A small and efficient linked list library.
-Copyright (C) 2003-2005 Stig Brautaset. All rights reserved.
-
-This file is part of SL.
-
-SL is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-SL is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with SL; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-
-*/
-
-/*
 
 =head1 NAME
 
@@ -240,20 +218,15 @@ void *sl_map(void *root, int (*func)(void *, void *), void *data)
 
 =item void *sl_filter(void *root, int (*func)(void *, void *), void *data)
 
-C<func> is called once for each node in the list, having the node itself
-passed as the first argument; C<data> is passed as the second argument.
-If C<func> returns a positive value the current node will be extracted
-from the passed-in list and stored in a temporary list. When we get to
-the end of the passed-in list, the temporary list is returned.
+If C<func> returns negative when it finds a match, the element is
+removed from the list and returned immediatly. However, if C<func>
+returns positive, it returns a list of *all* values that match, and
+these elements are removed from the original list.
 
-If C<func> returns a I<negative> value the same happens as when a
-positive value is returened but in addition any further traversal of the
-passed-in array is terminated and the current temporary list is returned
-immediately.
-
-You can return the first 5 elements that matches a certain criteria by
-maintaining a counter in C<data> and return 1 until the fifth node is
-found, then return -1.
+To return only the first 5 elements maintain a counter in C<data> and
+thus return only the first 5 elements matching your criteria by
+having C<func> examine C<data> and return negative instead of
+positive on the fifth match.
 
 B<Note:> this function takes a pointer to a pointer to a node as
 its argument. C does not allow C<void **> to be used as a
