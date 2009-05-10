@@ -1,3 +1,9 @@
+sl (0.3.4) 2006-12-21
+
+  * slight documentation improvement for `sl_filter()`
+  * remove debian files; the debian guys like to make their own
+  * remove config.h
+
 sl (0.3.3) 2005-10-29
 
   * added the `sl_filter()` function; tests & original
