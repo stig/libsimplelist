@@ -1,13 +1,6 @@
-sl (0.3.3) 2005-10-29
-
-  * added the `sl_filter()` function; tests & original
-    implementation by Richard Spindler
-  * no more recursive make
-  * bumped '-version-info'
-
 sl (0.3.2) 2005-08-20
 
-  * allow linking from C++ (caught by Joop Renes)
+  * allow linking from C++
   * remove old arch-tag lines
   * minor source reorg. 
   * no need to recompile tests if only library has changed

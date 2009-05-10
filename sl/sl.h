@@ -24,7 +24,6 @@ void *sl_shift(void *root);
 
 void *sl_reverse(void *root);
 void *sl_map(void *root, int (*func)(void *, void *), void *data);
-void *sl_filter(void *root, int (*func)(void *, void *), void *data);
 
 void *sl_split(void *root);
 void *sl_merge(void *p1, void *p2, int (*cmp)(void *, void *));

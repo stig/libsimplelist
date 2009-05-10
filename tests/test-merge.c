@@ -2,6 +2,7 @@
 
 int main(void)
 {
+	int i, j;
 	struct sl_node *q, *p;
 
 	p = new_node_or_die(4);

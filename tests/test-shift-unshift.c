@@ -17,7 +17,7 @@ int main(void)
 		}
 
 		val = i;
-		while ((p = sl_shift(&root))) {
+		while (p = sl_shift(&root)) {
 			free(p);
 			val--;
 		}

@@ -17,7 +17,7 @@ int main(void)
 		}
 
 		val = i;
-		while ((p = sl_pop(&root))) {
+		while (p = sl_pop(&root)) {
 			free(p);
 			val--;
 		}

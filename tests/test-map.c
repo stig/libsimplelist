@@ -3,7 +3,6 @@
 int twice(void *p, void *data)
 {
 	struct sl_node *q = p;
-  (void)data;
 	q->val *= 2;
 	return 0;
 }
@@ -25,7 +24,7 @@ int main(void)
 		return EXIT_FAILURE;
 	}
 
-	while ((p = sl_shift(&root))) {
+	while (p = sl_shift(&root)) {
 		i--;
 		if (p->val != (2 * vals[i])) {
 			return EXIT_FAILURE;

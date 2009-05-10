@@ -74,12 +74,15 @@ void *sl_push(void *root, void *p)
 Pop a node from a list. Return the pop'ed item, or NULL if the
 list is empty.
 
-B<Note:> this function takes a pointer to a pointer to a node as
-its argument. C does not allow C<void **> to be used as a
-generic pointer to pointer type. However, since C<void *> is a
-generic pointer, it can also point to a pointer to pointer. 
+Despite the misleading prototype, this function takes a pointer
+to a pointer to a node as its argument. C does not allow C<void
+**> to be used as a generic pointer to pointer type. However,
+since `void *' is a generic pointer, it can also point to a
+pointer to pointer. 
 
 =cut
+
+Thanks to Thomas Stegen of CLC for suggesting this solution.
 
 */
 void *sl_pop(void *root)
@@ -99,7 +102,7 @@ void *sl_pop(void *root)
 
 /*
 
-=item void *sl_unshift(void *root, void *p)
+=item void *sl_shift(void *root, void *p)
 
 Shift a node onto the `far end' of a list.
 This function can be used to append a list to another.
@@ -128,17 +131,21 @@ void *sl_unshift(void *root, void *p)
 
 /*
 
-=item void *sl_shift(void *)
+=item void *sl_unshift(void *)
 
 Shift a node from the `far end' of a list.
 Returns the item shifted off the list, or NULL if the list is empty.
 
-B<Note:> this function takes a pointer to a pointer to a node as
-its argument. C does not allow C<void **> to be used as a
-generic pointer to pointer type. However, since C<void *> is a
-generic pointer, it can also point to a pointer to pointer. 
+Despite the misleading prototype, this function takes a pointer
+to a pointer to a node as its argument. C does not allow C<void
+**> to be used as a generic pointer to pointer type. However,
+since C<void *> is a generic pointer, it can also point to a
+pointer to pointer. 
+
 
 =cut
+
+Thanks to Thomas Stegen of CLC for suggesting this solution.
 
 */
 void *sl_shift(void *root)
@@ -156,7 +163,6 @@ void *sl_shift(void *root)
 		return p;
 	}
 
-	q = p;
 	while (p && p->next) {
 		q = p;
 		p = p->next;
@@ -214,51 +220,6 @@ void *sl_map(void *root, int (*func)(void *, void *), void *data)
 	return NULL;
 }
 
-/*
-
-=item void *sl_filter(void *root, int (*func)(void *, void *), void *data)
-
-If C<func> returns negative when it finds a match, the element is
-removed from the list and returned immediatly. However, if C<func>
-returns positive, it returns a list of *all* values that match, and
-these elements are removed from the original list.
-
-To return only the first 5 elements maintain a counter in C<data> and
-thus return only the first 5 elements matching your criteria by
-having C<func> examine C<data> and return negative instead of
-positive on the fifth match.
-
-B<Note:> this function takes a pointer to a pointer to a node as
-its argument. C does not allow C<void **> to be used as a
-generic pointer to pointer type. However, since C<void *> is a
-generic pointer, it can also point to a pointer to pointer.
-
-=cut
-
-*/
-
-void *sl_filter(void *root, int (*func)(void *, void *), void *data)
-{
-	struct sl_node **pp = root;
-	struct sl_node *p = *pp;
-	struct sl_node *r = NULL, *head = NULL;
-
-	while (p) {
-		struct sl_node *q = sl_pop(&p);
-		int val = func(q, data);
-		if (!val) {
-			head = sl_unshift(head, q);
-		}
-		else {
-			r = sl_unshift(r, q);
-			if (val < 0) {
-				break;
-			}
-		}
-	}
-	*pp = sl_unshift(head, p);
-	return r;
-}
 
 /*
 
@@ -389,11 +350,6 @@ int sl_count(void *p)
 
 /*
 
-=item void sl_free(void *root, void (*func)(void*))
-
-A macro that just calls sl__free(). This is necessary because
-sl_free() is a defined function on OS-X.
-
 =item void sl__free(void *root, void (*func)(void*))
 
 Free a list of nodes. Takes an optional argument, @p func, used to
@@ -416,20 +372,6 @@ void sl__free(void *root, void (*func)(void*))
 /*
 
 =back
-
-=head1 AUTHOR
-
-Stig Brautaset <stig@brautaset.org>
-
-=head1 CREDITS
-
-Thanks to Thomas Stegen of comp.lang.c for suggesting the
-C<void*> trick employed in `sl_pop()` and `sl_shift()`.
-
-Thanks to CB Falconer of comp.programming for help on the
-sorting code.
-
-Richard Spindler suggested what became the C<sl_filter()> function.
 
 =head1 COPYRIGHT
 
